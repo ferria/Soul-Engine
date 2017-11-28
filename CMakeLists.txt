@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6.2)
 project(Soul_Engine)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 add_subdirectory(Libraries/glfw-3.2.1)
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
