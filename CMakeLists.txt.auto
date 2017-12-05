@@ -1,0 +1,229 @@
+cmake_minimum_required(VERSION 3.0.0 FATAL_ERROR)
+
+################### Variables. ####################
+# Change if you want modify path or other values. #
+###################################################
+
+set(PROJECT_NAME Phasma_Engine)
+# Output Variables
+set(OUTPUT_DEBUG Debug/bin)
+set(OUTPUT_RELEASE Release/bin)
+# Folders files
+set(CPP_DIR_1 ../Source Files/Algorithms/Filters)
+set(CPP_DIR_2 ../Source Files/Bounding Volume Heirarchy)
+set(CPP_DIR_3 ../Source Files/Data Structures/Radix Tree)
+set(CPP_DIR_4 ../Source Files/Display/Layout)
+set(CPP_DIR_5 ../Source Files/Display/Widget)
+set(CPP_DIR_6 ../Source Files/Display/Window)
+set(CPP_DIR_7 ../Source Files/Engine Core/Frame)
+set(CPP_DIR_8 ../Source Files/Engine Core/Object/Character)
+set(CPP_DIR_9 ../Source Files/Engine Core/Object)
+set(CPP_DIR_10 ../Source Files/Engine Core)
+set(CPP_DIR_11 ../Source Files/Events)
+set(CPP_DIR_12 ../Source Files/GPGPU/CUDA)
+set(CPP_DIR_13 ../Source Files/GPGPU)
+set(CPP_DIR_14 ../Source Files/GPGPU/OpenCL)
+set(CPP_DIR_15 ../Source Files/Input)
+set(CPP_DIR_16 ../Source Files/Memory)
+set(CPP_DIR_17 ../Source Files/Multithreading)
+set(CPP_DIR_18 ../Source Files/Physics Engine)
+set(CPP_DIR_19 ../Source Files/Raster Engine)
+set(CPP_DIR_20 ../Source Files/Raster Engine/OpenGL)
+set(CPP_DIR_21 ../Source Files/Raster Engine/Vulkan)
+set(CPP_DIR_22 ../Source Files/Ray Engine)
+set(CPP_DIR_23 ../Source Files/Transput)
+set(CPP_DIR_24 ../Source Files/Utility)
+set(HEADER_DIR_1 ../Include Files)
+set(HEADER_DIR_2 ../Source Files/Algorithms/Data Algorithms/GPU Compact)
+set(HEADER_DIR_3 ../Source Files/Algorithms/Data Algorithms/GPU Prefix Sum/CUDA)
+set(HEADER_DIR_4 ../Source Files/Algorithms/Data Algorithms/GPU Prefix Sum)
+set(HEADER_DIR_5 ../Source Files/Algorithms/Data Algorithms/GPU Sort/CUDA)
+set(HEADER_DIR_6 ../Source Files/Algorithms/Data Algorithms/GPU Sort)
+set(HEADER_DIR_7 ../Source Files/Algorithms/Filters/CUDA)
+set(HEADER_DIR_8 ../Source Files/Algorithms/Filters)
+set(HEADER_DIR_9 ../Source Files/Algorithms/Morton Code/CUDA)
+set(HEADER_DIR_10 ../Source Files/Algorithms/Morton Code)
+set(HEADER_DIR_11 ../Source Files/Bounding Volume Heirarchy)
+set(HEADER_DIR_12 ../Source Files/Bounding Volume Heirarchy/CUDA)
+set(HEADER_DIR_13 ../Source Files/Data Structures/Radix Tree)
+set(HEADER_DIR_14 ../Source Files/Display/Layout)
+set(HEADER_DIR_15 ../Source Files/Display/Widget/CUDA)
+set(HEADER_DIR_16 ../Source Files/Display/Widget)
+set(HEADER_DIR_17 ../Source Files/Display/Window)
+set(HEADER_DIR_18 ../Source Files/Engine Core)
+set(HEADER_DIR_19 ../Source Files/Engine Core/Frame)
+set(HEADER_DIR_20 ../Source Files/Engine Core/Material/Colour)
+set(HEADER_DIR_21 ../Source Files/Engine Core/Material/Colour/CUDA)
+set(HEADER_DIR_22 ../Source Files/Engine Core/Material/CUDA)
+set(HEADER_DIR_23 ../Source Files/Engine Core/Material)
+set(HEADER_DIR_24 ../Source Files/Engine Core/Material/Texture)
+set(HEADER_DIR_25 ../Source Files/Engine Core/Object/Character)
+set(HEADER_DIR_26 ../Source Files/Engine Core/Object/CUDA)
+set(HEADER_DIR_27 ../Source Files/Engine Core/Object)
+set(HEADER_DIR_28 ../Source Files/Engine Core/Object/OpenCL)
+set(HEADER_DIR_29 ../Source Files/Engine Core/Scene/CUDA)
+set(HEADER_DIR_30 ../Source Files/Engine Core/Scene/OpenCL)
+set(HEADER_DIR_31 ../Source Files/Engine Core/Scene)
+set(HEADER_DIR_32 ../Source Files/Events)
+set(HEADER_DIR_33 ../Source Files/GPGPU/CUDA)
+set(HEADER_DIR_34 ../Source Files/GPGPU)
+set(HEADER_DIR_35 ../Source Files/GPGPU/OpenCL)
+set(HEADER_DIR_36 ../Source Files/Input)
+set(HEADER_DIR_37 ../Source Files/Memory)
+set(HEADER_DIR_38 ../Source Files/Multithreading)
+set(HEADER_DIR_39 ../Source Files/Photography/Camera)
+set(HEADER_DIR_40 ../Source Files/Photography/Camera/CUDA)
+set(HEADER_DIR_41 ../Source Files/Photography/Camera/OpenCL)
+set(HEADER_DIR_42 ../Source Files/Photography/Film/CUDA)
+set(HEADER_DIR_43 ../Source Files/Photography/Film)
+set(HEADER_DIR_44 ../Source Files/Photography/Lens/CUDA)
+set(HEADER_DIR_45 ../Source Files/Photography/Lens)
+set(HEADER_DIR_46 ../Source Files/Physics Engine/CUDA)
+set(HEADER_DIR_47 ../Source Files/Physics Engine)
+set(HEADER_DIR_48 ../Source Files/Raster Engine)
+set(HEADER_DIR_49 ../Source Files/Raster Engine/OpenGL)
+set(HEADER_DIR_50 ../Source Files/Raster Engine/Vulkan)
+set(HEADER_DIR_51 ../Source Files/Ray Engine/CUDA)
+set(HEADER_DIR_52 ../Source Files/Ray Engine/OpenCL)
+set(HEADER_DIR_53 ../Source Files/Ray Engine)
+set(HEADER_DIR_54 ../Source Files/Transput)
+set(HEADER_DIR_55 ../Source Files/Utility)
+set(HEADER_DIR_56 ../Source Files/Utility/CUDA)
+set(HEADER_DIR_57 ../Source Files/Utility/Includes)
+set(HEADER_DIR_58 ../Source Files/Utility/OpenCL)
+
+############## CMake Project ################
+#        The main options of project        #
+#############################################
+
+project(${PROJECT_NAME} CXX)
+
+# Define Release by default.
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE "Release")
+  message(STATUS "Build type not specified: Use Release by default.")
+endif(NOT CMAKE_BUILD_TYPE)
+
+############## Artefacts Output #################
+# Defines outputs , depending Debug or Release. #
+#################################################
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${OUTPUT_DEBUG}")
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${OUTPUT_DEBUG}")
+  set(CMAKE_EXECUTABLE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${OUTPUT_DEBUG}")
+else()
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${OUTPUT_REL}")
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${OUTPUT_REL}")
+  set(CMAKE_EXECUTABLE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${OUTPUT_REL}")
+endif()
+
+################# Flags ################
+# Defines Flags for Windows and Linux. #
+########################################
+
+if(MSVC)
+   set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /EHsc")
+   set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /EHsc")
+endif(MSVC)
+if(NOT MSVC)
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+   if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+       set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+   endif()
+endif(NOT MSVC)
+
+################ Files ################
+#   --   Add files to project.   --   #
+#######################################
+
+file(GLOB SRC_FILES
+    ${CPP_DIR_1}/*.cpp
+    ${CPP_DIR_2}/*.cpp
+    ${CPP_DIR_3}/*.cpp
+    ${CPP_DIR_4}/*.cpp
+    ${CPP_DIR_5}/*.cpp
+    ${CPP_DIR_6}/*.cpp
+    ${CPP_DIR_7}/*.cpp
+    ${CPP_DIR_8}/*.cpp
+    ${CPP_DIR_9}/*.cpp
+    ${CPP_DIR_10}/*.cpp
+    ${CPP_DIR_11}/*.cpp
+    ${CPP_DIR_12}/*.cpp
+    ${CPP_DIR_13}/*.cpp
+    ${CPP_DIR_14}/*.cpp
+    ${CPP_DIR_15}/*.cpp
+    ${CPP_DIR_16}/*.cpp
+    ${CPP_DIR_17}/*.cpp
+    ${CPP_DIR_18}/*.cpp
+    ${CPP_DIR_19}/*.cpp
+    ${CPP_DIR_20}/*.cpp
+    ${CPP_DIR_21}/*.cpp
+    ${CPP_DIR_22}/*.cpp
+    ${CPP_DIR_23}/*.cpp
+    ${CPP_DIR_24}/*.cpp
+    ${HEADER_DIR_1}/*.h
+    ${HEADER_DIR_2}/*.h
+    ${HEADER_DIR_3}/*.h
+    ${HEADER_DIR_4}/*.h
+    ${HEADER_DIR_5}/*.h
+    ${HEADER_DIR_6}/*.h
+    ${HEADER_DIR_7}/*.h
+    ${HEADER_DIR_8}/*.h
+    ${HEADER_DIR_9}/*.h
+    ${HEADER_DIR_10}/*.h
+    ${HEADER_DIR_11}/*.h
+    ${HEADER_DIR_12}/*.h
+    ${HEADER_DIR_13}/*.h
+    ${HEADER_DIR_14}/*.h
+    ${HEADER_DIR_15}/*.h
+    ${HEADER_DIR_16}/*.h
+    ${HEADER_DIR_17}/*.h
+    ${HEADER_DIR_18}/*.h
+    ${HEADER_DIR_19}/*.h
+    ${HEADER_DIR_20}/*.h
+    ${HEADER_DIR_21}/*.h
+    ${HEADER_DIR_22}/*.h
+    ${HEADER_DIR_23}/*.h
+    ${HEADER_DIR_24}/*.h
+    ${HEADER_DIR_25}/*.h
+    ${HEADER_DIR_26}/*.h
+    ${HEADER_DIR_27}/*.h
+    ${HEADER_DIR_28}/*.h
+    ${HEADER_DIR_29}/*.h
+    ${HEADER_DIR_30}/*.h
+    ${HEADER_DIR_31}/*.h
+    ${HEADER_DIR_32}/*.h
+    ${HEADER_DIR_33}/*.h
+    ${HEADER_DIR_34}/*.h
+    ${HEADER_DIR_35}/*.h
+    ${HEADER_DIR_36}/*.h
+    ${HEADER_DIR_37}/*.h
+    ${HEADER_DIR_38}/*.h
+    ${HEADER_DIR_39}/*.h
+    ${HEADER_DIR_40}/*.h
+    ${HEADER_DIR_41}/*.h
+    ${HEADER_DIR_42}/*.h
+    ${HEADER_DIR_43}/*.h
+    ${HEADER_DIR_44}/*.h
+    ${HEADER_DIR_45}/*.h
+    ${HEADER_DIR_46}/*.h
+    ${HEADER_DIR_47}/*.h
+    ${HEADER_DIR_48}/*.h
+    ${HEADER_DIR_49}/*.h
+    ${HEADER_DIR_50}/*.h
+    ${HEADER_DIR_51}/*.h
+    ${HEADER_DIR_52}/*.h
+    ${HEADER_DIR_53}/*.h
+    ${HEADER_DIR_54}/*.h
+    ${HEADER_DIR_55}/*.h
+    ${HEADER_DIR_56}/*.h
+    ${HEADER_DIR_57}/*.h
+    ${HEADER_DIR_58}/*.h
+)
+
+# Add executable to build.
+add_executable(${PROJECT_NAME} 
+   ${SRC_FILES}
+)
+
